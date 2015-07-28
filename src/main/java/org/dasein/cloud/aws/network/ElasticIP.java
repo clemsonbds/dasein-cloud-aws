@@ -226,9 +226,11 @@ public class ElasticIP extends AbstractIpAddressSupport<AWSCloud> {
 	}
 
     private @Nullable String getVPCAddressAssociationId(@Nonnull String addressId) throws InternalException, CloudException {
-        APITrace.begin(provider, "IpAddress.getVPCAddressAssociationId");
+        AWSCloud provider = getProvider();
+
+    	APITrace.begin(provider, "IpAddress.getVPCAddressAssociationId");
         try {
-            ProviderContext ctx = provider.getContext();
+			ProviderContext ctx = provider.getContext();
 
             if( ctx == null ) {
                 throw new CloudException("No context was set for this request");
@@ -240,7 +242,8 @@ public class ElasticIP extends AbstractIpAddressSupport<AWSCloud> {
             Document doc;
 
             parameters.put("AllocationId.1", addressId);
-            method = new EC2Method(provider, provider.getEc2Url(), parameters);
+//            method = new EC2Method(provider, provider.getEc2Url(), parameters);
+            method = new EC2Method(provider.getEc2Url(), provider, parameters);
             try {
                 doc = method.invoke();
             }

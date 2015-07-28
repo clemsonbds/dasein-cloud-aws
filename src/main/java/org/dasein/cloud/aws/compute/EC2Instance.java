@@ -506,9 +506,9 @@ public class EC2Instance extends AbstractVMSupport<AWSCloud> {
 
     public static class GetUserDataCallable implements Callable<String> {
         private final String              instanceId;
-        private final Map<String, String> params;
+        private  Map<String, String> params;
         private final AWSCloud            awsProvider;
-        private final String              ec2url;
+        private  String              ec2url;
 
         public GetUserDataCallable( String iId, Map<String, String> p, AWSCloud ap, String eUrl ) {
             instanceId = iId;

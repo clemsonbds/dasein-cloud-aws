@@ -2397,9 +2397,10 @@ public class VPC extends AbstractVLANSupport<AWSCloud> {
     }
 
     public String getDefaultVPCIDForRegion(String regionId) throws CloudException, InternalException{
+    	AWSCloud provider = getProvider();
         Map<String,String> parameters = provider.getStandardParameters(provider.getContext(), EC2Method.DESCRIBE_ACCOUNT_ATTRIBUTES);
         parameters.put("AttributeName.1", "supported-platforms");
-        EC2Method method = new EC2Method(provider, provider.getEc2Url(provider.getContext().getRegionId()), parameters);
+        EC2Method method = new EC2Method(provider.getEc2Url(provider.getContext().getRegionId()), provider, parameters);
         try{
             Document doc = method.invoke();
 
